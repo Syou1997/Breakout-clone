@@ -7,8 +7,6 @@
 
 .container {
     display: flex;
-    justify-content: center;
-    align-items: center;
 
     #myCanvas {
         background-color: black;
@@ -24,10 +22,9 @@
 
 }
 .button_area {
-    margin: 3rem 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    // border: 2px solid red;
+    width: 700px;
+    margin: 3rem auto;
     button{
         width: 100px;
         height: 40px;
