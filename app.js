@@ -24,7 +24,7 @@ class Brick {
         this.x = x;
         this.y = y;
         this.width = 50;
-        this.height = 50;   
+        this.height = 50;
         brickArray.push(this);
         this.visible = true;
     }
@@ -39,7 +39,8 @@ class Brick {
             ballX >= this.x - radius &&
             ballX <= this.x + this.width + radius &&
             ballY <= this.y + this.height + radius &&
-            ballY >= this.y - radius);
+            ballY >= this.y - radius
+        );
     }
 }
 //製作所有磚塊物件(製作滿10個都不重複的磚塊後就停止)
@@ -79,39 +80,39 @@ c.addEventListener("mousemove", (e) => {
     ground_x = e.clientX;
 })
 //剩餘數量轉換工具
-function amountTool(count){
-    if(count === 0){
+function amountTool(count) {
+    if (count === 0) {
         return 10
     }
-    if(count === 1){
-       return 9
+    if (count === 1) {
+        return 9
     }
-    if(count === 2){
-       return 8
+    if (count === 2) {
+        return 8
     }
-    if(count === 3){
-       return 7
+    if (count === 3) {
+        return 7
     }
-    if(count === 4){
-       return 6
+    if (count === 4) {
+        return 6
     }
-    if(count === 5){
-       return 5
+    if (count === 5) {
+        return 5
     }
-    if(count === 6){
-       return 4
+    if (count === 6) {
+        return 4
     }
-    if(count === 7){
-       return 3
+    if (count === 7) {
+        return 3
     }
-    if(count === 8){
-       return 2
+    if (count === 8) {
+        return 2
     }
-    if(count === 9){
-       return 1
+    if (count === 9) {
+        return 1
     }
-    if(count === 10){
-       return 0
+    if (count === 10) {
+        return 0
     }
 
 }
@@ -120,71 +121,68 @@ function drawCircle() {
     brickArray.forEach((brick) => {
         if (brick.visible && brick.touchingBall(circle_x, circle_y)) {
             count++;
-            document.getElementById("text").innerText = "Remaining Amount:"+  amountTool(count);;
+            document.getElementById("text").innerText = "Remaining Amount:" + amountTool(count);;
             brick.visible = false;
             //改變x,y方向速度，並且將brick從brickArray中移除
-            //從下方撞擊
+            // 從下方撞擊
             if (circle_y >= brick.y + brick.height) {
-                ySpeed = ySpeed * -1;
+                ySpeed *= -1;
             }
-            //從上方撞擊
-            if (circle_y <= brick.y) {
-                ySpeed = ySpeed * -1;
+            // 從上方撞擊
+            else if (circle_y <= brick.y) {
+                ySpeed *= -1;
             }
-            //從左方撞擊
-            if (circle_x <= brick.x) {
-                xSpeed = xSpeed * -1;
+            // 從左方撞擊
+            else if (circle_x <= brick.x) {
+                xSpeed *= -1;
             }
-            //從右方撞擊
-            if (circle_x >= brick.x + brick.width) {
-                xSpeed = xSpeed * -1;
+            // 從右方撞擊
+            else if (circle_x >= brick.x + brick.width) {
+                xSpeed *= -1;
             }
             //打滿磚塊後遊戲結束
             if (count === 10) {
-                alert("Win!" + seconds+"seconds");
+                alert("Win!" + seconds + "seconds");
                 clearInterval(game);
                 clearInterval(stopWatch);
             }
         }
     })
     //確認球是否打到橘色地板反彈
-    if (circle_x >= ground_x - radius && circle_x <= ground_x + 200 + radius
-        && circle_y >= ground_y - radius && circle_y <= ground_y + radius
+    if (
+        circle_x >= ground_x - radius &&
+        circle_x <= ground_x + 200 + radius &&
+        circle_y >= ground_y - radius &&
+        circle_y <= ground_y + radius
     ) {
         if (ySpeed > 0) {
-            //施加彈力
-            circle_y = circle_y - 40;
-            ySpeed *= -1;
+            circle_y -= 50;
         } else {
-            //施加彈力
-            circle_y = circle_y + 40;
-            ySpeed *= -1;
+            circle_y += 50;
         }
-
-
-
+        ySpeed *= -1;
     }
 
     //確認球是否打到牆壁反彈
-    //確認右邊邊界
+    // 確認右邊邊界
     if (circle_x >= canvasWidth - radius) {
         xSpeed *= -1;
     }
-    //確認左邊邊界
+    // 確認左邊邊界
     if (circle_x <= radius) {
         xSpeed *= -1;
     }
-    //確認上邊邊界
+    // 確認上邊邊界
     if (circle_y <= radius) {
         ySpeed *= -1;
     }
-    //確認下邊邊界
+    // 確認下邊邊界
     if (circle_y >= canvasHeight - radius) {
         ySpeed *= -1;
     }
-    //更動圓的座標
-    circle_x = circle_x + xSpeed;
-    circle_y = circle_y + ySpeed;
+    // 更動圓的座標
+    circle_x += xSpeed;
+    circle_y += ySpeed;
 
     //畫出黑色背景
     ctx.fillStyle = "black"
@@ -215,7 +213,7 @@ let game = setInterval(drawCircle, 25);
 //製作碼表
 // 計時的方法
 seconds = 0;
-function timer (){
+function timer() {
     seconds++
 }
 let stopWatch = setInterval(timer, 1000);
